@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{51769915-EEE7-E7C6-4A49-51F93D3F1E41}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/__Scripts/Prospector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/__Scripts/Deck.cs">
     <Files>
       <File FileName="Assets/__Scripts/Card.cs" Line="26" Column="16" />
       <File FileName="Assets/__Scripts/Deck.cs" Line="347" Column="1" />
@@ -11,7 +11,7 @@
           <Node name="06-08-module2projects-carinshabi" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="__Scripts" expanded="True">
-                <Node name="Prospector.cs" selected="True" />
+                <Node name="Deck.cs" selected="True" />
               </Node>
             </Node>
           </Node>
