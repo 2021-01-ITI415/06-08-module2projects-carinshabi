@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Card : MonoBehaviour {
-<<<<<<< HEAD
 	[Header("Set Dynamically")]
 	public string suit; // Suit of the Card (C,D,H, or S)
 	public int rank; // Rank of the Card (1-14)
@@ -24,43 +23,9 @@ public class Card : MonoBehaviour {
 			back.SetActive(!value);
 		}
 	}
-}
-=======
->>>>>>> parent of a7b6bde (Work Session 2)
-
-	public string    suit;
-	public int       rank;
-	public Color     color = Color.black;
-	public string    colS = "Black";  // or "Red"
-	
-	public List<GameObject> decoGOs = new List<GameObject>();
-	public List<GameObject> pipGOs = new List<GameObject>();
-	
-	public GameObject back;  // back of card;
-	public CardDefinition def;  // from DeckXML.xml		
-
-
-	public bool faceUp {
-		get {
-			return (!back.activeSelf);
-		}
-
-		set {
-			back.SetActive(!value);
-		}
-	}
-
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 } // class Card
+
+
 
 [System.Serializable]
 public class Decorator{

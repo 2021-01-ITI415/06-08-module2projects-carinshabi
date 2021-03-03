@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{51769915-EEE7-E7C6-4A49-51F93D3F1E41}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/__Scripts/Prospector.cs">
+    <Files>
+      <File FileName="Assets/__Scripts/Card.cs" Line="26" Column="16" />
+      <File FileName="Assets/__Scripts/Deck.cs" Line="347" Column="1" />
+      <File FileName="Assets/__Scripts/Prospector.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="06-08-module2projects-carinshabi" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="__Scripts" expanded="True">
+                <Node name="Prospector.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="609d0fda-afbc-4a10-9de4-029031fb2507" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
