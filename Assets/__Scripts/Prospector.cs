@@ -10,7 +10,7 @@ public class Prospector : MonoBehaviour {
 
 	[Header("Set in Inspector")]
 	public TextAsset			deckXML;
-	public TextAsset layoutXML;
+	public TextAsset           layoutXML;
 
 	[Header("Set Dynamically")]
 	public Deck					deck;

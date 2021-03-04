@@ -37,8 +37,8 @@ public class Layout : MonoBehaviour
         xml = xmlr.xml["xml"][0]; // And xml is set as a shortcut to the XML
 
         // Read in the multipler, which sets card spacing 
-        multiplier.x = float.Parse(xml["multipler"][0].att("x"));
-        multiplier.y = float.Parse(xml["multipler"][0].att("y"));
+        multiplier.x = float.Parse(xml["multiplier"][0].att("x"));
+        multiplier.y = float.Parse(xml["multiplier"][0].att("y"));
 
         // Read in the slots 
         SlotDef tSD;
