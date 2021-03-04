@@ -5,7 +5,8 @@ using UnityEngine;
 // The SlotDef class is not a subclass of MonoBehaviour, so it doesn't need 
 // a seperate C# file.
 [System.Serializable] // This makes SlotDefs visible in the Unity Inspector pane
-public class SlotDef {
+public class SlotDef
+{
     public float x;
     public float y;
     public bool faceUp = false;
@@ -16,7 +17,8 @@ public class SlotDef {
     public string type = "slot";
     public Vector2 stagger;
 }
-public class Layout : MonoBehaviour {
+public class Layout : MonoBehaviour
+{
     public PT_XMLReader xmlr; // Just like Deck, this has a PT_XMLReader
     public PT_XMLHashtable xml; // This variable is for faster xml access
     public Vector2 multiplier; // The offset of the tableau's center
@@ -28,7 +30,8 @@ public class Layout : MonoBehaviour {
     public string[] sortingLayerNames = new string[] { "Row0", "Row1", "Row2", "Row3", "Discard", "Draw" };
 
     // This function is called to read in the LayoutXML.xml file
-    public void ReadLayout(string xmlText) {
+    public void ReadLayout(string xmlText)
+    {
         xmlr = new PT_XMLReader();
         xmlr.Parse(xmlText); // The XML is parsed
         xml = xmlr.xml["xml"][0]; // And xml is set as a shortcut to the XML
@@ -42,12 +45,16 @@ public class Layout : MonoBehaviour {
         // slotsX is used as a shortcut to all the <slot>s
         PT_XMLHashList slotsX = xml["slot"];
 
-        for (int i=0; i<slotsX.Count; i++) {
+        for (int i = 0; i < slotsX.Count; i++)
+        {
             tSD = new SlotDef(); // Create a new SlotDef instance
-            if (slotsX[i].HasAtt("type")) {
+            if (slotsX[i].HasAtt("type"))
+            {
                 // If this <slot> has a type attribute parse it 
                 tSD.type = slotsX[i].att("type");
-            } else {
+            }
+            else
+            {
                 // If not, set its type to "slot", it's a card in the rows 
                 tSD.type = "slot";
             }
@@ -58,14 +65,17 @@ public class Layout : MonoBehaviour {
             // This converts the numner of the LayerID into a text layerName
             tSD.layerName = sortingLayerNames[tSD.layerID];
 
-            switch (tSD.type) {
+            switch (tSD.type)
+            {
                 // pull additional attributes based on the type of this <slot>
                 case "slot":
                     tSD.faceUp = (slotsX[i].att("faceUp") == "1");
                     tSD.id = int.Parse(slotsX[i].att("id"));
-                    if (slotsX[i].HasAtt("hiddenby")) {
+                    if (slotsX[i].HasAtt("hiddenby"))
+                    {
                         string[] hiding = slotsX[i].att("hiddenby").Split(',');
-                        foreach( string s in hiding ) {
+                        foreach (string s in hiding)
+                        {
                             tSD.hiddenBy.Add(int.Parse(s));
                         }
                     }
@@ -83,4 +93,4 @@ public class Layout : MonoBehaviour {
 
         }
     }
- }
+}
