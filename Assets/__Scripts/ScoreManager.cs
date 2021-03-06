@@ -56,7 +56,8 @@ public class ScoreManager : MonoBehaviour {
             case eScoreEvent.gameLoss: // Lost the round
                 chain = 0; // resets the score chain
                 score += scoreRun; // add scoreRun to total score
-                break; // reset scoreRun
+                scoreRun = 0; // reset scoreRun
+                break; 
 
             case eScoreEvent.mine: // Remove a mine card
                 chain++; // increase the score chain 
