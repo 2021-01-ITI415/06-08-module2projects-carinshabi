@@ -18,6 +18,8 @@ public class Prospector : MonoBehaviour {
 	public Vector2 fsPosRun = new Vector2(0.5f, 0.75f);
 	public Vector2 fsPosMid2 = new Vector2(0.4f, 1.0f);
 	public Vector2 fsPosEnd = new Vector2(0.5f, 0.95f);
+	public float reloadDelay = 1f; // The delay between rounds
+	public Text gameOverText, roundResultText, highScoreText;
 
 	[Header("Set Dynamically")]
 	public Deck deck;
@@ -32,6 +34,37 @@ public class Prospector : MonoBehaviour {
 	void Awake()
 	{
 		S = this;
+		SetUpUITexts();
+	}
+
+	void SetUpUITexts() {
+		// Set up the HighScore UI Text
+		GameObject go = GameObject.Find("HighScore");
+		if (go != null) {
+			highScoreText = go.GetComponent<Text>();
+		}
+		int highScore = ScoreManager.HIGH_SCORE;
+		string hScore = "High Score: " + Utils.AddCommasToNumber(highScore);
+		go.GetComponent<Text>().text = hScore;
+
+		// Set up the UI Texts that show at the end of the round 
+		go = GameObject.Find("GameOver");
+		if (go != null) {
+			gameOverText = go.GetComponent<Text>();
+		}
+
+		go = GameObject.Find("RoundResult");
+		if (go != null) {
+			roundResultText = go.GetComponent<Text>();
+		}
+
+		// Make the end of round texts invisible 
+		ShowResultsUI(false);
+	}
+
+	void ShowResultsUI(bool show) {
+		gameOverText.gameObject.SetActive(show);
+		roundResultText.gameObject.SetActive(show);
 	}
 
 	void Start() {
@@ -277,18 +310,40 @@ public class Prospector : MonoBehaviour {
 	}
 
 	// Called when the game is over. Simple for now, but expandable
-	void GameOver(bool won) { 
+	void GameOver(bool won) {
+		int score = ScoreManager.SCORE;
+		if (fsRun != null) score += fsRun.score;
 		if (won) {
-			print("Game Over. You won! :)");
+			gameOverText.text = "Round Over";
+			roundResultText.text = "You won this round! \nRound Score: " + score;
+			ShowResultsUI(true);
+			// print("Game Over. You won! :)"); // Comment out this line
 			ScoreManager.EVENT(eScoreEvent.gameWin);
 			FloatingScoreHandler(eScoreEvent.gameWin);
 		} else {
-			print("Game Over. You Lost. :(");
+			gameOverText.text = "Game Over";
+			if (ScoreManager.HIGH_SCORE <= score) {
+				string str = "You got the high score!\nHigh score: " + score;
+				roundResultText.text = str;
+			} else {
+				roundResultText.text = "Your final score was: " + score;
+			}
+			ShowResultsUI(true);
+			// print("Game Over. You Lost. :("); // Comment out this line
 			ScoreManager.EVENT(eScoreEvent.gameLoss);
 			FloatingScoreHandler(eScoreEvent.gameLoss);
 		}
 		// Reload the scene, resetting the game
-		SceneManager.LoadScene("__Prospector_Scene_0");
+		// SceneManager.LoadScene("__Prospector_Scene_0"); // Now commented out!
+
+		// Reload the scene in reloadDelay seconds
+		// This will give the score a moment to travel
+		Invoke("ReloadLevel", reloadDelay);
+	}
+
+	void ReloadLevel() {
+		// Reload the scene, resetting the game
+		// SceneManager.LoadScene("__Prospector_Scene_0"); // Now commented out!
 	}
 
 	// Return true if the two cards are adjacent in rank (A & K wrap around)
