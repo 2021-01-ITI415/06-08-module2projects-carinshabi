@@ -40,15 +40,15 @@ public class ScoreManager : MonoBehaviour {
         SCORE_FROM_PREV_ROUND = 0;
     }
 
-    static public void EVENT(eScoreEvent evt) { 
+    static public void EVENT(eScoreEvent evt, bool goldCard) { 
         try { // try-catch stops an error from breaking your program
-            S.Event(evt);
+            S.Event(evt, goldCard);
         } catch (System.NullReferenceException nre) {
             Debug.LogError("ScoreManager:EVENT() called while S=null. \n" + nre);
         }
     }
 
-    void Event (eScoreEvent evt) { 
+    void Event (eScoreEvent evt, bool goldCard) { 
         switch (evt) {
             // Same things need to happen whether it's a draw, a win, or a lose
             case eScoreEvent.draw: // Drawing a card
@@ -60,7 +60,14 @@ public class ScoreManager : MonoBehaviour {
                 break; 
 
             case eScoreEvent.mine: // Remove a mine card
-                chain++; // increase the score chain 
+                if (goldCard)
+                { 
+                    chain += 2;
+                } else
+                {
+                    chain++;  // increase the score chain 
+                }
+                
                 scoreRun += chain; // add score for this card to run
                 break;
         }
@@ -86,7 +93,7 @@ public class ScoreManager : MonoBehaviour {
                 break;
 
             default:
-                print("score: " + score + " scoreRun:" + scoreRun + " chain:" + chain);
+                //print("score: " + score + " scoreRun:" + scoreRun + " chain:" + chain);
                 break;
         }
     }

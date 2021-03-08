@@ -27,7 +27,7 @@ public class Prospector : MonoBehaviour {
 	public List<CardProspector> drawPile;
 	public Transform layoutAnchor;
 	public CardProspector target;
-	public List<CardProspector> tableau;
+	public List<CardProspector> table;
 	public List<CardProspector> discardPile;
 	public FloatingScore fsRun;
 
@@ -133,11 +133,11 @@ public class Prospector : MonoBehaviour {
 			cp.state = eCardState.tableau;
 			cp.SetSortingLayerName(tSD.layerName); // Set the sorting layers
 
-			tableau.Add(cp); // Add this CardProspector to the List<> tableau
+			table.Add(cp); // Add this CardProspector to the List<> table
 		}
 
 		// Set which cards are hiding others
-		foreach (CardProspector tCP in tableau) {
+		foreach (CardProspector tCP in table) {
 			foreach( int hid in tCP.slotDef.hiddenBy ) {
 				cp = FindCardByLayoutID(hid);
 				tCP.hiddenBy.Add(cp);
@@ -154,8 +154,8 @@ public class Prospector : MonoBehaviour {
 
 	// Convert from the layoutID int to the CardProspector with that ID
 	CardProspector FindCardByLayoutID (int layoutID) { 
-		foreach (CardProspector tCP in tableau) { 
-			// Search through all cards in the tableau List<>
+		foreach (CardProspector tCP in table) { 
+			// Search through all cards in the table List<>
 			if (tCP.layoutID == layoutID) {
 				// If the card has the same ID, return it
 				return (tCP);
@@ -167,10 +167,10 @@ public class Prospector : MonoBehaviour {
 
 	// This turns cards in the Mine face-up or face-down
 	void SetTableauFaces() { 
-		foreach( CardProspector cd in tableau ) {
+		foreach( CardProspector cd in table ) {
 			bool faceUp = true; // Assume the card will be face-up
 			foreach ( CardProspector cover in cd.hiddenBy ) { 
-				// If either of the covering cards are in the tableau
+				// If either of the covering cards are in the table
 				if (cover.state == eCardState.tableau) {
 					faceUp = false; // then this card is face-down
 				}
@@ -224,6 +224,9 @@ public class Prospector : MonoBehaviour {
 		for (int i=0; i<drawPile.Count; i++) {
 			cd = drawPile[i];
 			cd.transform.parent = layoutAnchor;
+			
+			if (Random.Range(0, 100) < 10)
+				drawPile[i].isGoldCard = true;
 
 			// Position it correctly with the layout.drawPile.stagger
 			Vector2 dpStagger = layout.drawPile.stagger;
@@ -253,13 +256,14 @@ public class Prospector : MonoBehaviour {
 				MoveToDiscard(target); // Moves the target to the discardPile
 				MoveToTarget(Draw()); // Moves the next drawn card to the target
 				UpdateDrawPile(); // Restacks the drawPile
-				ScoreManager.EVENT(eScoreEvent.draw);
+				ScoreManager.EVENT(eScoreEvent.draw, false);
 				FloatingScoreHandler(eScoreEvent.draw);
 				break;
 
 			case eCardState.tableau:
-				// Clicking a card in the tableau will check if it's valid play
+				// Clicking a card in the table will check if it's valid play
 				bool validMatch = true;
+				CardProspector tempCardRef = target;
 				if (!cd.faceUp) {
 					// If the card is face-down, it's not valid 
 					validMatch = false;
@@ -271,10 +275,11 @@ public class Prospector : MonoBehaviour {
 				if (!validMatch) return; // return if not valid 
 
 				// If we got here, then: Yay! It's a valid card.
-				tableau.Remove(cd); // Remove it from the tableau List
+				table.Remove(cd); // Remove it from the table List
 				MoveToTarget(cd); // Make it the target card
-				SetTableauFaces(); // Update tableau card face-ups
-				ScoreManager.EVENT(eScoreEvent.mine);
+				SetTableauFaces(); // Update table card face-ups
+				
+				ScoreManager.EVENT(eScoreEvent.mine, tempCardRef.isGoldCard);
 				FloatingScoreHandler(eScoreEvent.mine);
 				break;
 		}
@@ -284,8 +289,8 @@ public class Prospector : MonoBehaviour {
 
 	// Test wheather the game is over
 	void CheckForGameOver() { 
-		// If the tableau is empty, the game is over
-		if (tableau.Count==0) {
+		// If the table is empty, the game is over
+		if (table.Count==0) {
 			// Call GameOveer() with a win
 			GameOver (true);
 			return;
@@ -297,7 +302,7 @@ public class Prospector : MonoBehaviour {
 		}
 
 		// Check for remaining valid plays
-		foreach ( CardProspector cd in tableau) { 
+		foreach ( CardProspector cd in table) { 
 			if (AdjacentRank(cd, target)) {
 				// If there is a valid play, the game's not over
 				return;
@@ -318,7 +323,7 @@ public class Prospector : MonoBehaviour {
 			roundResultText.text = "You won this round! \nRound Score: " + score;
 			ShowResultsUI(true);
 			// print("Game Over. You won! :)"); // Comment out this line
-			ScoreManager.EVENT(eScoreEvent.gameWin);
+			ScoreManager.EVENT(eScoreEvent.gameWin, false);
 			FloatingScoreHandler(eScoreEvent.gameWin);
 		} else {
 			gameOverText.text = "Game Over";
@@ -330,7 +335,7 @@ public class Prospector : MonoBehaviour {
 			}
 			ShowResultsUI(true);
 			// print("Game Over. You Lost. :("); // Comment out this line
-			ScoreManager.EVENT(eScoreEvent.gameLoss);
+			ScoreManager.EVENT(eScoreEvent.gameLoss, false);
 			FloatingScoreHandler(eScoreEvent.gameLoss);
 		}
 		// Reload the scene, resetting the game
@@ -343,7 +348,7 @@ public class Prospector : MonoBehaviour {
 
 	void ReloadLevel() {
 		// Reload the scene, resetting the game
-		// SceneManager.LoadScene("__Prospector_Scene_0"); // Now commented out!
+		SceneManager.LoadScene("__Prospector_Scene_0"); // Now commented out!
 	}
 
 	// Return true if the two cards are adjacent in rank (A & K wrap around)

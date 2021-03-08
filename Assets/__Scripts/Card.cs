@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Card : MonoBehaviour {
+
+	public bool isGoldCard = false;
+
 	[Header("Set Dynamically")]
 	public string suit; // Suit of the Card (C,D,H, or S)
 	public int rank; // Rank of the Card (1-14)
@@ -20,7 +23,18 @@ public class Card : MonoBehaviour {
 
     void Start() {
 		SetSortOrder(0); // Ensures that the card starts properly depth sorted
-    }
+		
+		if(isGoldCard)
+        {
+			foreach (var spriteRenderer in spriteRenderers)
+				if (spriteRenderer.gameObject.name == "face")
+					GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Cards/Card_Front_Gold");
+
+			foreach (var spriteRenderer in spriteRenderers)
+				if (spriteRenderer.gameObject.name == "back")
+					GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Cards/Card_Back_Gold");
+		}		
+	}
 
 	// If spriteRenderers is not yet defined, this function defines it
 	public void PopulateSpriteRenderers() { 
@@ -71,18 +85,19 @@ public class Card : MonoBehaviour {
 	}
 
     public bool faceUp { 
+		
 		get {
 			return (!back.activeSelf);
 		}
 		set {
 			back.SetActive(!value);
-		}
 
+		}
 	}
 
 	// Virtual methods can be overrideen by subclass methods with the same name
 	virtual public void OnMouseUpAsButton() {
-		print(name); // When clicked, this outputs the card name
+		//print(name); // When clicked, this outputs the card name
 	}
 	
 } // class Card

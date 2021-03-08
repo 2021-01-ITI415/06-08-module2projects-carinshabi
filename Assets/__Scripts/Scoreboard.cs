@@ -24,7 +24,8 @@ public class Scoreboard : MonoBehaviour {
         }
         set {
             _score = value;
-            _scoreString = _score.ToString("NO");
+            _scoreString = _score.ToString();
+            GetComponent<Text>().text = _score.ToString();
         }
     }
     // The scoreString property also sets the Text.text

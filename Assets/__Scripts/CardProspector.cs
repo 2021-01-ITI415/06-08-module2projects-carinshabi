@@ -15,10 +15,10 @@ public class CardProspector : Card { // Make sure CardProspector extends Card
     public eCardState state = eCardState.drawpile;
     // The hiddenBy list stores which other cards will keep this one face down
     public List<CardProspector> hiddenBy = new List<CardProspector>();
-    // The layoutID matches this card to the tableau XML if it's a tableau card 
+    // The layoutID matches this card to the table XML if it's a table card 
     public int layoutID;
     // This SlotDefs class stores information pulled in from the LayoutXML <slot>
-    public SlotDef slotDef; 
+    public SlotDef slotDef;
 
     // This allows the card to react to being clicked 
     override public void OnMouseUpAsButton() {
