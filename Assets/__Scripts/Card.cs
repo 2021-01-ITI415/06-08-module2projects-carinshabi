@@ -27,13 +27,23 @@ public class Card : MonoBehaviour {
 		if(isGoldCard)
         {
 			foreach (var spriteRenderer in spriteRenderers)
+			{
 				if (spriteRenderer.gameObject.name == "face")
+				{
 					GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Cards/Card_Front_Gold");
+					spriteRenderer.gameObject.AddComponent<SetSortOrder>();
+				}
+			}
 
 			foreach (var spriteRenderer in spriteRenderers)
+			{
 				if (spriteRenderer.gameObject.name == "back")
-					GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Cards/Card_Back_Gold");
-		}		
+				{
+					spriteRenderer.sprite = Resources.Load<Sprite>("Cards/Card_Back_Gold");
+				}
+			}
+		}
+		
 	}
 
 	// If spriteRenderers is not yet defined, this function defines it
