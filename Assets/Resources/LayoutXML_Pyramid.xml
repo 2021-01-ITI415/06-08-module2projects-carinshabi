@@ -12,19 +12,19 @@
 	<!-- hiddenby is the ids of cards that keep a card face-down -->
 	
 	<!-- Layer0, the deepest cards. -->
-	<slot id="0" x="-6" y="-5" faceUp="0" layer="0" hiddenby="3,4" />
-	<slot id="1" x="0"  y="-5" faceUp="0" layer="0" hiddenby="5,6" />
-	<slot id="2" x="6"  y="-5" faceUp="0" layer="0" hiddenby="7,8" />
+	<slot id="0" x="-2" y="-5" faceUp="0" layer="0" hiddenby="3,4" />
+	<slot id="1" x="0"  y="-5" faceUp="0" layer="0" hiddenby="4,5" />
+	<slot id="2" x="2"  y="-5" faceUp="0" layer="0" hiddenby="5,6" />
 	
 	<!-- Layer1, the next level. -->
 	<!-- ID = the card number (7 of hearts), x = x coordinate on screen, y = y coordinate on screen, faceUp is a bool (0 = false, 1 = true) -->
 	<!-- Only change the x and y coords so that the table looks like a pyramid --> 
-	<slot id="3" x="-7" y="-4" faceUp="0" layer="1" hiddenby="9,10" />
-	<slot id="4" x="-5" y="-4" faceUp="0" layer="1" hiddenby="10,11" />
-	<slot id="5" x="-1" y="-4" faceUp="0" layer="1" hiddenby="12,13" />
-	<slot id="6" x="1"  y="-4" faceUp="0" layer="1" hiddenby="13,14" />
-	<slot id="7" x="5"  y="-4" faceUp="0" layer="1" hiddenby="15,16" />
-	<slot id="8" x="7"  y="-4" faceUp="0" layer="1" hiddenby="16,17" />
+	<slot id="3" x="-5" y="-4" faceUp="0" layer="1" hiddenby="9,10" />
+	<slot id="4" x="-3" y="-4" faceUp="0" layer="1" hiddenby="10,11" />
+	<slot id="5" x="-1" y="-4" faceUp="0" layer="1" hiddenby="11,12" />
+	<slot id="6" x="1"  y="-4" faceUp="0" layer="1" hiddenby="12,13" />
+	<slot id="7" x="3"  y="-4" faceUp="0" layer="1" hiddenby="13,14" />
+	<slot id="8" x="5"  y="-4" faceUp="0" layer="1" hiddenby="14,15" />
 	
 	
 	<!-- Layer2, the next level. -->
@@ -55,7 +55,7 @@
 	<slot type="drawpile" x="6" y="4" xstagger="0.15" layer="4"/>
 	
 	<!-- This positions the discard pile and target card -->
-	<slot type="discardpile" x="0" y="1" layer="5"/>
+	<slot type="discardpile" x="0" y="1.25" layer="5"/>
 	
 </xml>
 	
