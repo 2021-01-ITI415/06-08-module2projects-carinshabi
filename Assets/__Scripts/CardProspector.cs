@@ -10,7 +10,7 @@ public enum eCardState {
     discard
 }
 public class CardProspector : Card { // Make sure CardProspector extends Card
-    [Header("Set Dynamically: CardProspector")]
+    [Header("Set Dynamically: CardProspector1")]
     // This is how you use the enum eCardState
     public eCardState state = eCardState.drawpile;
     // The hiddenBy list stores which other cards will keep this one face down
@@ -23,7 +23,7 @@ public class CardProspector : Card { // Make sure CardProspector extends Card
     // This allows the card to react to being clicked 
     override public void OnMouseUpAsButton() {
         // Call the CardClicked method on the Prospector singleton
-        Prospector.S.CardClicked(this);
+        Prospector1.S.CardClicked(this);
         // Also call the base class (Card.cs) version of this method
         base.OnMouseUpAsButton();
     }
