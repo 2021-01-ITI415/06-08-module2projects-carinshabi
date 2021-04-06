@@ -1,15 +1,17 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // An enum defines a variable type with a few prenamed values
-public enum eCardState { 
+public enum eCardState
+{
     drawpile,
     tableau,
     target,
     discard
 }
-public class CardProspector : Card { // Make sure CardProspector extends Card
+public class CardProspector : Card
+{ // Make sure CardProspector extends Card
     [Header("Set Dynamically: CardProspector1")]
     // This is how you use the enum eCardState
     public eCardState state = eCardState.drawpile;
@@ -21,9 +23,14 @@ public class CardProspector : Card { // Make sure CardProspector extends Card
     public SlotDef slotDef;
 
     // This allows the card to react to being clicked 
-    override public void OnMouseUpAsButton() {
+    override public void OnMouseUpAsButton()
+    {
         // Call the CardClicked method on the Prospector singleton
-        Prospector1.S.CardClicked(this);
+        if (FindObjectOfType<Prospector1>() != null)
+            Prospector1.S.CardClicked(this);
+        else
+            Prospector.S.CardClicked(this);
+
         // Also call the base class (Card.cs) version of this method
         base.OnMouseUpAsButton();
     }

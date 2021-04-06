@@ -164,7 +164,7 @@ public class Deck : MonoBehaviour
             for (int i = 0; i < 13; i++)
             {
                 cardNames.Add(s + (i + 1));
-                
+
             }
         }
 
