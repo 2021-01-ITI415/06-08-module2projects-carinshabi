@@ -203,6 +203,7 @@ public class Prospector1 : MonoBehaviour
     // Moves the current target to the discardPile
     public void MoveToDiscard(CardProspector cd)
     {
+        Debug.Log("Move to Discard");
         // Set the state of the card to discard
         cd.state = eCardState.discard;
         discardPile.Add(cd); // Add it to the discardPile List<>
@@ -280,14 +281,18 @@ public class Prospector1 : MonoBehaviour
             case eCardState.target:
                 if (cd.rank == 13)
                 {
+                    Debug.Log("eCardState.target");
                     table.Remove(cd);
                     MoveToDiscard(cd);
                 }
 
-                if (_selectionRoutineRunning)
+                if (_selectionRoutineRunning) {
                     selectedCards.Add(cd);
+                    Debug.Log("Selection Routine Running");
+                }
                 else
                 {
+                    Debug.Log("StartCortoutine");
                     StartCoroutine(CardSelectionRoutine());
                     selectedCards.Add(cd);
                 }
@@ -353,6 +358,7 @@ public class Prospector1 : MonoBehaviour
         if (selectedCards[0].rank + selectedCards[1].rank == 13)
         {
             StartCoroutine(ClearCardTextAfterDelay(selectedCards[0].gameObject.name + " and " + selectedCards[1].gameObject.name + " equal 13."));
+            bool shouldDraw = selectedCards[0].state == eCardState.target || selectedCards[1].state == eCardState.target;
 
             table.Remove(selectedCards[0]);
             table.Remove(selectedCards[1]);
@@ -360,6 +366,15 @@ public class Prospector1 : MonoBehaviour
             MoveToDiscard(selectedCards[0]);
             MoveToDiscard(selectedCards[1]);
 
+            Debug.Log($"card 0: {selectedCards[0].state} | card 1: {selectedCards[1].state}");
+            if (shouldDraw)
+            {
+                Debug.Log("Automatically Drawing");
+                MoveToTarget(Draw()); // Moves the next drawn card to the target
+                UpdateDrawPile(); // Restacks the drawPile
+                ScoreManager.EVENT(eScoreEvent.draw, false);
+                FloatingScoreHandler(eScoreEvent.draw);
+            }
         }
         else
         {
